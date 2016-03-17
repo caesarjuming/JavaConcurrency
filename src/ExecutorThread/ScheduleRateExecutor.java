@@ -1,9 +1,6 @@
 package ExecutorThread;
 
-import java.util.concurrent.Callable;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 /**
  * Created by caesar on 16/3/16.
@@ -30,8 +27,13 @@ public class ScheduleRateExecutor {
 
         // runnable ,首次执行线程等待的时间,和上面的区别是,等上一个线程执行完毕,每个线程的间隔时间
         scheduledExecutorService.scheduleWithFixedDelay(new myTask(),10,1,TimeUnit.SECONDS);
+        scheduledExecutorService.shutdown();
 
 
+        ScheduledThreadPoolExecutor scheduledThreadPoolExecutor= (ScheduledThreadPoolExecutor) Executors.newScheduledThreadPool(1);
+        // 设置为true,在shuntdown之后不会停止
+        scheduledThreadPoolExecutor.setContinueExistingPeriodicTasksAfterShutdownPolicy(true);
+        scheduledThreadPoolExecutor.shutdownNow();
 
 
 
